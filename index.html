@@ -189,7 +189,11 @@
             <article class="game-card reveal" aria-labelledby="reflexTitle">
               <div class="game-head">
                 <h3 id="reflexTitle">Reflex Grid</h3>
-                <button id="reflexStart" class="btn btn-primary" type="button">Start 20s</button>
+                <div class="game-actions">
+                  <button id="reflexStart" class="btn btn-primary" type="button">Start 20s</button>
+                  <button id="reflexStop" class="btn btn-ghost is-hidden" type="button">Stop</button>
+                  <button id="reflexRestart" class="btn btn-ghost" type="button">Restart</button>
+                </div>
               </div>
               <p class="game-meta" id="reflexStats" aria-live="polite">Score: 0 | Hits: 0 | Misses: 0 | Time: 20s</p>
               <div class="reflex-grid" id="reflexGrid" role="grid" aria-label="Reflex grid game"></div>
@@ -206,21 +210,22 @@
             <h2 id="contactTitle">Let’s Build Something High-Leverage</h2>
           </div>
 
-          <div class="contact-grid">
-            <article class="card reveal">
-              <h3>Email</h3>
-              <p id="emailValue">suraj.biswas@example.com</p>
+          <article class="card reveal contact-shell">
+            <div class="contact-primary">
+              <p class="contact-label">Direct Email</p>
+              <a class="contact-email" id="emailLink" href="mailto:suraj.biswas@example.com">
+                <span id="emailValue">suraj.biswas@example.com</span>
+              </a>
               <div class="contact-actions">
                 <button id="copyEmail" class="btn btn-primary" type="button">Copy Email</button>
-                <a id="emailLink" class="btn btn-ghost" href="mailto:suraj.biswas@example.com">Email Now</a>
+                <a class="btn btn-ghost" href="mailto:suraj.biswas@example.com">Email Now</a>
               </div>
-            </article>
-
-            <article class="card reveal">
-              <h3>Social</h3>
-              <ul class="social-list" id="socialLinks"></ul>
-            </article>
-          </div>
+            </div>
+            <div class="contact-secondary">
+              <p class="contact-label">Social Profiles</p>
+              <ul class="social-list social-pills" id="socialLinks"></ul>
+            </div>
+          </article>
         </div>
       </section>
     </main>

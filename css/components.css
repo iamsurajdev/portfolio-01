@@ -76,6 +76,10 @@
   background: color-mix(in srgb, var(--bg1) 70%, transparent);
 }
 
+.is-hidden {
+  display: none !important;
+}
+
 .top-theme-toggle {
   margin-left: 0.4rem;
 }

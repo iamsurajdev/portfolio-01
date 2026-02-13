@@ -4,9 +4,11 @@ window.GamesModule = (function () {
   function initReflexGrid() {
     const grid = document.getElementById("reflexGrid");
     const startBtn = document.getElementById("reflexStart");
+    const stopBtn = document.getElementById("reflexStop");
+    const restartBtn = document.getElementById("reflexRestart");
     const stats = document.getElementById("reflexStats");
     const bestNode = document.getElementById("reflexBest");
-    if (!grid || !startBtn || !stats || !bestNode) return;
+    if (!grid || !startBtn || !stopBtn || !restartBtn || !stats || !bestNode) return;
 
     const tiles = [];
     let running = false;
@@ -17,6 +19,23 @@ window.GamesModule = (function () {
     let activeIndex = -1;
     let countdownTimer = null;
     let targetTimer = null;
+
+    function syncControls() {
+      startBtn.classList.toggle("is-hidden", running);
+      stopBtn.classList.toggle("is-hidden", !running);
+      stopBtn.disabled = !running;
+    }
+
+    function clearTimers() {
+      if (countdownTimer) {
+        window.clearInterval(countdownTimer);
+        countdownTimer = null;
+      }
+      if (targetTimer) {
+        window.clearInterval(targetTimer);
+        targetTimer = null;
+      }
+    }
 
     function updateStats() {
       stats.textContent = `Score: ${score} | Hits: ${hits} | Misses: ${misses} | Time: ${timeLeft}s`;
@@ -37,12 +56,12 @@ window.GamesModule = (function () {
     }
 
     function stopGame() {
+      if (!running) return;
       running = false;
-      startBtn.disabled = false;
       startBtn.textContent = "Start 20s";
+      syncControls();
       setActive(-1);
-      if (countdownTimer) window.clearInterval(countdownTimer);
-      if (targetTimer) window.clearInterval(targetTimer);
+      clearTimers();
       const bestSoFar = Number(localStorage.getItem(REFLEX_BEST_KEY) || 0);
       if (score > bestSoFar) localStorage.setItem(REFLEX_BEST_KEY, String(score));
       bestNode.textContent = `Best Score: ${Math.max(score, bestSoFar)}`;
@@ -50,13 +69,14 @@ window.GamesModule = (function () {
     }
 
     function startGame() {
+      clearTimers();
       running = true;
       score = 0;
       hits = 0;
       misses = 0;
       timeLeft = 20;
-      startBtn.disabled = true;
       startBtn.textContent = "Running...";
+      syncControls();
       updateStats();
       pickTarget();
 
@@ -107,7 +127,13 @@ window.GamesModule = (function () {
     }
 
     startBtn.addEventListener("click", startGame);
+    stopBtn.addEventListener("click", stopGame);
+    restartBtn.addEventListener("click", () => {
+      if (running) stopGame();
+      startGame();
+    });
     buildGrid();
+    syncControls();
     bestNode.textContent = `Best Score: ${Number(localStorage.getItem(REFLEX_BEST_KEY) || 0)}`;
     updateStats();
   }
