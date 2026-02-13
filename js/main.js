@@ -94,20 +94,6 @@
         showToast("Clipboard blocked. Copy manually.");
       }
     });
-
-    byId("contactForm").addEventListener("submit", (event) => {
-      event.preventDefault();
-      const form = event.currentTarget;
-      const name = form.name.value.trim();
-      const message = form.message.value.trim();
-      if (!name || !message) {
-        showToast("Name and message are required.");
-        return;
-      }
-      const subject = encodeURIComponent(`Inquiry from ${name}`);
-      const body = encodeURIComponent(`Hi Suraj,\n\n${message}\n\nThanks,\n${name}`);
-      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-    });
   }
 
   function setupMenu() {

@@ -8,7 +8,7 @@ window.ScrollModule = (function () {
         const target = document.querySelector(href);
         if (!target) return;
         event.preventDefault();
-        const reduce = document.documentElement.classList.contains("reduce-motion");
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
       });
     });

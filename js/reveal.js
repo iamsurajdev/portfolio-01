@@ -1,9 +1,7 @@
 window.RevealModule = (function () {
   function observe() {
     const nodes = document.querySelectorAll(".reveal");
-    const reduce =
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      document.documentElement.classList.contains("reduce-motion");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
       nodes.forEach((node) => node.classList.add("in"));
       return;

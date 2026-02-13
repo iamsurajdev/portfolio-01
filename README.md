@@ -42,5 +42,5 @@ Premium, bold-playful, dark-themed single-page website built with semantic HTML,
 
 ## Notes
 - Content is editable from `js/data.js`.
-- Contact form is UI-only and opens a `mailto:` draft.
-- Includes two built-in mini games in `js/games.js`.
+- Contact section includes direct email and social links.
+- Includes one built-in mini game in `js/games.js`.

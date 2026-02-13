@@ -54,19 +54,19 @@ window.PORTFOLIO_DATA = {
   ],
   writing: [
     {
-      title: "From Discovery to Delivery: Closing the Solution Gap",
-      date: "2025-12-03",
-      href: "https://medium.com/@surajbiswas/from-discovery-to-delivery-123456"
+      title: "How I Think About Product-Led Engineering",
+      date: "2026-01-05",
+      href: "https://medium.com/@surajbiswas"
     },
     {
-      title: "Technical Presales as Product Thinking",
-      date: "2025-10-17",
-      href: "https://medium.com/@surajbiswas/technical-presales-as-product-thinking-123456"
+      title: "Turning Presales Insights into Build Priorities",
+      date: "2025-11-21",
+      href: "https://medium.com/@surajbiswas"
     },
     {
-      title: "Practical Architecture Reviews for Fast Teams",
-      date: "2025-08-26",
-      href: "https://medium.com/@surajbiswas/practical-architecture-reviews-123456"
+      title: "Practical Architecture Notes from Client Delivery",
+      date: "2025-09-09",
+      href: "https://medium.com/@surajbiswas"
     }
   ],
   social: [

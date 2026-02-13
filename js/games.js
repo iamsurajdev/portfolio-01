@@ -1,216 +1,119 @@
 window.GamesModule = (function () {
-  const AIM_BEST_KEY = "sb-aim-best";
+  const REFLEX_BEST_KEY = "sb-reflex-best";
 
-  function initAim() {
-    const canvas = document.getElementById("aimCanvas");
-    const ctx = canvas.getContext("2d");
-    const startBtn = document.getElementById("aimStart");
-    const stats = document.getElementById("aimStats");
-    const bestNode = document.getElementById("aimBest");
+  function initReflexGrid() {
+    const grid = document.getElementById("reflexGrid");
+    const startBtn = document.getElementById("reflexStart");
+    const stats = document.getElementById("reflexStats");
+    const bestNode = document.getElementById("reflexBest");
+    if (!grid || !startBtn || !stats || !bestNode) return;
 
+    const tiles = [];
     let running = false;
-    let endAt = 0;
     let score = 0;
     let hits = 0;
-    let shots = 0;
-    let target = { x: 120, y: 120, r: 22 };
-    const best = Number(localStorage.getItem(AIM_BEST_KEY) || 0);
-    bestNode.textContent = `Best Score: ${best}`;
+    let misses = 0;
+    let timeLeft = 20;
+    let activeIndex = -1;
+    let countdownTimer = null;
+    let targetTimer = null;
 
-    const pickTarget = () => {
-      target = {
-        r: 16 + Math.random() * 18,
-        x: 30 + Math.random() * (canvas.width - 60),
-        y: 30 + Math.random() * (canvas.height - 60)
-      };
-    };
+    function updateStats() {
+      stats.textContent = `Score: ${score} | Hits: ${hits} | Misses: ${misses} | Time: ${timeLeft}s`;
+    }
 
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      grad.addColorStop(0, "rgba(124,92,255,.35)");
-      grad.addColorStop(1, "rgba(46,229,157,.22)");
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function setActive(index) {
+      activeIndex = index;
+      tiles.forEach((tile, i) => {
+        const active = i === index;
+        tile.classList.toggle("is-active", active);
+        tile.setAttribute("aria-label", active ? "Active tile" : "Idle tile");
+      });
+    }
 
-      ctx.beginPath();
-      ctx.arc(target.x, target.y, target.r, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(234,240,255,0.86)";
-      ctx.fill();
+    function pickTarget() {
+      const next = Math.floor(Math.random() * tiles.length);
+      setActive(next === activeIndex ? (next + 1) % tiles.length : next);
+    }
 
-      ctx.beginPath();
-      ctx.arc(target.x, target.y, target.r * 0.45, 0, Math.PI * 2);
-      ctx.fillStyle = "#7c5cff";
-      ctx.fill();
-
-      if (running) {
-        const left = Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
-        ctx.fillStyle = "#eaf0ff";
-        ctx.font = "600 18px Inter";
-        ctx.fillText(`${left}s`, canvas.width - 44, 26);
-      }
-    };
-
-    const updateStats = () => {
-      const accuracy = shots ? Math.round((hits / shots) * 100) : 0;
-      stats.textContent = `Score: ${score} | Hits: ${hits} | Shots: ${shots} | Accuracy: ${accuracy}%`;
-    };
-
-    const stop = () => {
+    function stopGame() {
       running = false;
       startBtn.disabled = false;
-      const bestSoFar = Number(localStorage.getItem(AIM_BEST_KEY) || 0);
-      if (score > bestSoFar) {
-        localStorage.setItem(AIM_BEST_KEY, String(score));
-      }
+      startBtn.textContent = "Start 20s";
+      setActive(-1);
+      if (countdownTimer) window.clearInterval(countdownTimer);
+      if (targetTimer) window.clearInterval(targetTimer);
+      const bestSoFar = Number(localStorage.getItem(REFLEX_BEST_KEY) || 0);
+      if (score > bestSoFar) localStorage.setItem(REFLEX_BEST_KEY, String(score));
       bestNode.textContent = `Best Score: ${Math.max(score, bestSoFar)}`;
-      draw();
-    };
+      updateStats();
+    }
 
-    const loop = () => {
-      draw();
-      if (!running) return;
-      if (Date.now() >= endAt) {
-        stop();
-        return;
-      }
-      requestAnimationFrame(loop);
-    };
+    function startGame() {
+      running = true;
+      score = 0;
+      hits = 0;
+      misses = 0;
+      timeLeft = 20;
+      startBtn.disabled = true;
+      startBtn.textContent = "Running...";
+      updateStats();
+      pickTarget();
 
-    canvas.addEventListener("click", (event) => {
+      targetTimer = window.setInterval(() => {
+        if (!running) return;
+        misses += 1;
+        score = Math.max(0, score - 25);
+        pickTarget();
+        updateStats();
+      }, 820);
+
+      countdownTimer = window.setInterval(() => {
+        timeLeft -= 1;
+        if (timeLeft <= 0) {
+          timeLeft = 0;
+          stopGame();
+          return;
+        }
+        updateStats();
+      }, 1000);
+    }
+
+    function onTilePress(index) {
       if (!running) return;
-      shots += 1;
-      const rect = canvas.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) * canvas.width) / rect.width;
-      const y = ((event.clientY - rect.top) * canvas.height) / rect.height;
-      const hit = Math.hypot(target.x - x, target.y - y) <= target.r;
-      if (hit) {
+      if (index === activeIndex) {
         hits += 1;
         score += 100;
         pickTarget();
       } else {
-        score = Math.max(0, score - 20);
+        misses += 1;
+        score = Math.max(0, score - 30);
       }
       updateStats();
-    });
+    }
 
-    startBtn.addEventListener("click", () => {
-      running = true;
-      startBtn.disabled = true;
-      score = 0;
-      hits = 0;
-      shots = 0;
-      endAt = Date.now() + 30000;
-      pickTarget();
-      updateStats();
-      loop();
-    });
+    function buildGrid() {
+      grid.innerHTML = "";
+      for (let i = 0; i < 9; i += 1) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "reflex-tile";
+        button.setAttribute("role", "gridcell");
+        button.setAttribute("aria-label", "Idle tile");
+        button.addEventListener("click", () => onTilePress(i));
+        grid.appendChild(button);
+        tiles.push(button);
+      }
+    }
 
-    draw();
+    startBtn.addEventListener("click", startGame);
+    buildGrid();
+    bestNode.textContent = `Best Score: ${Number(localStorage.getItem(REFLEX_BEST_KEY) || 0)}`;
     updateStats();
   }
 
-  function initMemory() {
-    const symbols = ["◆", "●", "▲", "■", "✦", "✶", "⬢", "◉"];
-    const grid = document.getElementById("memoryGrid");
-    const stats = document.getElementById("memoryStats");
-    const win = document.getElementById("memoryWin");
-    const reset = document.getElementById("memoryReset");
-
-    let cards = [];
-    let open = [];
-    let matched = 0;
-    let moves = 0;
-    let startAt = 0;
-    let timer = null;
-
-    function updateStats() {
-      const seconds = startAt ? Math.floor((Date.now() - startAt) / 1000) : 0;
-      stats.textContent = `Moves: ${moves} | Time: ${seconds}s`;
-    }
-
-    function reshuffle() {
-      cards = [...symbols, ...symbols]
-        .map((value) => ({ value, id: crypto.randomUUID(), flipped: false, matched: false }))
-        .sort(() => Math.random() - 0.5);
-    }
-
-    function flipButton(btn, show, value) {
-      btn.dataset.flipped = String(show);
-      btn.textContent = show ? value : "";
-      btn.setAttribute("aria-label", show ? `Card ${value}` : "Hidden card");
-    }
-
-    function checkWin() {
-      if (matched !== cards.length) return;
-      if (timer) window.clearInterval(timer);
-      const seconds = Math.floor((Date.now() - startAt) / 1000);
-      win.textContent = `Completed in ${moves} moves and ${seconds}s.`;
-    }
-
-    function onCardClick(button, card) {
-      if (card.flipped || card.matched || open.length >= 2) return;
-      card.flipped = true;
-      flipButton(button, true, card.value);
-      open.push({ card, button });
-
-      if (open.length < 2) return;
-      moves += 1;
-      updateStats();
-
-      const [a, b] = open;
-      if (a.card.value === b.card.value) {
-        a.card.matched = true;
-        b.card.matched = true;
-        matched += 2;
-        open = [];
-        checkWin();
-        return;
-      }
-
-      window.setTimeout(() => {
-        a.card.flipped = false;
-        b.card.flipped = false;
-        flipButton(a.button, false, "");
-        flipButton(b.button, false, "");
-        open = [];
-      }, 520);
-    }
-
-    function render() {
-      grid.innerHTML = "";
-      cards.forEach((card) => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "memory-card";
-        button.dataset.flipped = "false";
-        button.setAttribute("role", "gridcell");
-        button.setAttribute("aria-label", "Hidden card");
-        button.addEventListener("click", () => onCardClick(button, card));
-        grid.appendChild(button);
-      });
-    }
-
-    function resetGame() {
-      reshuffle();
-      open = [];
-      matched = 0;
-      moves = 0;
-      startAt = Date.now();
-      win.textContent = "";
-      if (timer) window.clearInterval(timer);
-      timer = window.setInterval(updateStats, 1000);
-      render();
-      updateStats();
-    }
-
-    reset.addEventListener("click", resetGame);
-    resetGame();
-  }
-
   function init() {
-    initAim();
-    initMemory();
+    initReflexGrid();
   }
 
   return { init };

@@ -84,15 +84,8 @@
   margin-top: 0.85rem;
 }
 
-.toggles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  margin-bottom: 1rem;
-}
-
 .game-card {
-  grid-column: span 6;
+  grid-column: span 12;
   padding: clamp(1rem, 2.5vw, 1.4rem);
 }
 
@@ -104,44 +97,35 @@
   margin-bottom: 0.5rem;
 }
 
-#aimCanvas {
-  width: 100%;
-  height: auto;
-  margin-top: 0.45rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--stroke);
-  background: linear-gradient(140deg, rgba(124, 92, 255, 0.1), rgba(46, 229, 157, 0.08));
-}
-
-.memory-grid {
+.reflex-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.45rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 0.5rem;
 }
 
-.memory-card {
+.reflex-tile {
   appearance: none;
   border: 1px solid var(--stroke);
-  border-radius: 0.7rem;
+  border-radius: 0.8rem;
   background: color-mix(in srgb, var(--bg1) 80%, transparent);
-  color: var(--text0);
-  min-height: 3rem;
+  min-height: 4.4rem;
   cursor: pointer;
-  font-size: 1.2rem;
-  transition: transform 180ms var(--easing), border-color 180ms var(--easing);
+  transition: transform 160ms var(--easing), border-color 160ms var(--easing), background 160ms var(--easing);
 }
 
-.memory-card[data-flipped="true"] {
-  border-color: color-mix(in srgb, var(--accent-b), white 20%);
+.reflex-tile.is-active {
+  border-color: color-mix(in srgb, var(--accent-b), white 18%);
+  background: radial-gradient(circle at 50% 50%, rgba(46, 229, 157, 0.38), rgba(46, 229, 157, 0.08));
 }
 
-.memory-card:hover,
-.memory-card:focus-visible {
+.reflex-tile:hover,
+.reflex-tile:focus-visible {
   transform: translateY(-1px);
 }
 
 .contact-grid > .card {
-  grid-column: span 4;
+  grid-column: span 6;
 }
 
 label {
@@ -186,9 +170,8 @@ textarea {
 }
 
 @media (max-width: 30rem) {
-  .memory-card {
-    min-height: 2.55rem;
-    font-size: 1rem;
+  .reflex-tile {
+    min-height: 3.6rem;
   }
 
   .footer-shell {

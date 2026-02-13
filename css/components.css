@@ -11,7 +11,7 @@
   min-height: 4rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 1rem;
 }
 
@@ -23,6 +23,7 @@
 
 .desktop-nav {
   display: flex;
+  margin-left: auto;
   gap: clamp(0.7rem, 2.5vw, 1.4rem);
 }
 
@@ -73,6 +74,10 @@
 
 .btn-ghost {
   background: color-mix(in srgb, var(--bg1) 70%, transparent);
+}
+
+.top-theme-toggle {
+  margin-left: 0.4rem;
 }
 
 .card,
@@ -224,6 +229,10 @@ textarea:focus-visible {
 @media (max-width: 56rem) {
   .desktop-nav {
     display: none;
+  }
+
+  .top-theme-toggle {
+    margin-left: auto;
   }
 
   .menu-toggle,

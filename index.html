@@ -55,10 +55,19 @@
         <nav class="desktop-nav" aria-label="Primary">
           <a href="#about">About</a>
           <a href="#work">Work</a>
-          <a href="#writing">Writing</a>
+          <a href="#writing">Blogs</a>
           <a href="#playground">Playground</a>
           <a href="#contact">Contact</a>
         </nav>
+        <button id="themeToggle" class="btn btn-ghost top-theme-toggle" type="button" aria-pressed="false">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+            />
+          </svg>
+          Theme
+        </button>
         <button
           class="menu-toggle"
           id="menuToggle"
@@ -86,7 +95,7 @@
           <nav class="mobile-links" aria-label="Mobile primary">
             <a href="#about">About</a>
             <a href="#work">Work</a>
-            <a href="#writing">Writing</a>
+            <a href="#writing">Blogs</a>
             <a href="#playground">Playground</a>
             <a href="#contact">Contact</a>
           </nav>
@@ -152,7 +161,7 @@
         <div class="container">
           <div class="section-head reveal">
             <p class="eyebrow">Selected Work</p>
-            <h2 id="workTitle">Product-Led Delivery with Business Impact</h2>
+            <h2 id="workTitle">Selected Projects</h2>
           </div>
           <div class="card-grid" id="projectsGrid"></div>
         </div>
@@ -161,8 +170,9 @@
       <section class="writing section" id="writing" aria-labelledby="writingTitle">
         <div class="container">
           <div class="section-head reveal">
-            <p class="eyebrow">Writing</p>
-            <h2 id="writingTitle">Notes on Engineering, GTM, and Transformation</h2>
+            <p class="eyebrow">Blogs</p>
+            <h2 id="writingTitle">Blogs I’ve Written</h2>
+            <p class="hero-copy">I’ll keep adding my Medium blog links here.</p>
           </div>
           <div class="card-grid writing-grid" id="writingGrid"></div>
         </div>
@@ -175,33 +185,15 @@
             <h2 id="playTitle">Systems Thinking, but Fun</h2>
           </div>
 
-          <div class="toggles reveal" role="group" aria-label="Preferences">
-            <button id="themeToggle" class="btn btn-ghost" type="button" aria-pressed="false">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
-              Theme
-            </button>
-            <button id="motionToggle" class="btn btn-ghost" type="button" aria-pressed="false">Reduced Motion</button>
-          </div>
-
           <div class="games-grid">
-            <article class="game-card reveal" aria-labelledby="aimTitle">
+            <article class="game-card reveal" aria-labelledby="reflexTitle">
               <div class="game-head">
-                <h3 id="aimTitle">Aim Trainer Lite</h3>
-                <button id="aimStart" class="btn btn-primary" type="button">Start 30s</button>
+                <h3 id="reflexTitle">Reflex Grid</h3>
+                <button id="reflexStart" class="btn btn-primary" type="button">Start 20s</button>
               </div>
-              <p class="game-meta" id="aimStats" aria-live="polite">Score: 0 | Hits: 0 | Shots: 0 | Accuracy: 0%</p>
-              <canvas id="aimCanvas" width="560" height="320" aria-label="Aim trainer game area"></canvas>
-              <p class="game-meta" id="aimBest" aria-live="polite">Best Score: 0</p>
-            </article>
-
-            <article class="game-card reveal" aria-labelledby="memoryTitle">
-              <div class="game-head">
-                <h3 id="memoryTitle">Memory Flip (4x4)</h3>
-                <button id="memoryReset" class="btn btn-primary" type="button">Reset</button>
-              </div>
-              <p class="game-meta" id="memoryStats" aria-live="polite">Moves: 0 | Time: 0s</p>
-              <div class="memory-grid" id="memoryGrid" role="grid" aria-label="Memory flip cards"></div>
-              <p class="game-meta" id="memoryWin" aria-live="polite"></p>
+              <p class="game-meta" id="reflexStats" aria-live="polite">Score: 0 | Hits: 0 | Misses: 0 | Time: 20s</p>
+              <div class="reflex-grid" id="reflexGrid" role="grid" aria-label="Reflex grid game"></div>
+              <p class="game-meta" id="reflexBest" aria-live="polite">Best Score: 0</p>
             </article>
           </div>
         </div>
@@ -227,19 +219,6 @@
             <article class="card reveal">
               <h3>Social</h3>
               <ul class="social-list" id="socialLinks"></ul>
-            </article>
-
-            <article class="card reveal">
-              <h3>Quick Message</h3>
-              <form id="contactForm" novalidate>
-                <label for="nameInput">Name</label>
-                <input id="nameInput" name="name" type="text" autocomplete="name" required />
-
-                <label for="messageInput">Message</label>
-                <textarea id="messageInput" name="message" rows="4" required></textarea>
-
-                <button class="btn btn-primary" type="submit">Open Email Draft</button>
-              </form>
             </article>
           </div>
         </div>
