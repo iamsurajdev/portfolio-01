@@ -2,12 +2,12 @@ window.PORTFOLIO_DATA = {
   person: {
     name: "Suraj Biswas",
     role: "Full-Stack Engineer • Technical Presales • Digital Transformation",
-    email: "suraj.biswas@example.com",
+    email: "surajbiswas367@gmail.com",
     website: "https://surajbiswas.dev/",
     sameAs: [
-      "https://github.com/surajbiswas",
-      "https://www.linkedin.com/in/surajbiswas/",
-      "https://medium.com/@surajbiswas"
+      "https://github.com/iamsurajdev",
+      "https://www.linkedin.com/in/iamsurajdev/",
+      "https://medium.com/@iamsurajdev"
     ]
   },
   nowChips: [
@@ -70,8 +70,8 @@ window.PORTFOLIO_DATA = {
     }
   ],
   social: [
-    { label: "GitHub", href: "https://github.com/surajbiswas" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/surajbiswas/" },
-    { label: "Medium", href: "https://medium.com/@surajbiswas" }
+    { label: "GitHub", href: "https://github.com/iamsurajdev" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/iamsurajdev/" },
+    { label: "Medium", href: "https://medium.com/@iamsurajdev" }
   ]
 };

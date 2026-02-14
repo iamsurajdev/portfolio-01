@@ -70,7 +70,7 @@
     const toast = byId("toast");
     const email = data.person.email;
     byId("emailValue").textContent = email;
-    byId("emailLink").setAttribute("href", `mailto:${email}`);
+    byId("emailNowLink").setAttribute("href", `mailto:${email}`);
 
     const showToast = (msg) => {
       toast.textContent = msg;
