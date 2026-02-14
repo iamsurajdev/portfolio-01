@@ -34,14 +34,6 @@
         <h3>${project.title}</h3>
         <p>${project.summary}</p>
         <p class="project-meta">${project.tags.join(" • ")}</p>
-        <div class="project-links">
-          ${project.links
-            .map(
-              (link) =>
-                `<a class="btn btn-ghost" href="${link.href}" target="_blank" rel="noopener noreferrer">${createLinkIcon("external")}${link.label}</a>`
-            )
-            .join("")}
-        </div>
       `;
       grid.appendChild(card);
     });
