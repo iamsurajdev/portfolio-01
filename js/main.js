@@ -195,7 +195,6 @@
     if (window.RevealModule) window.RevealModule.observe();
     if (window.ScrollModule) window.ScrollModule.init();
     if (window.ThemeModule) window.ThemeModule.init();
-    if (window.GamesModule) window.GamesModule.init();
   }
 
   document.addEventListener("DOMContentLoaded", init);

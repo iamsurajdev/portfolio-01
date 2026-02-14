@@ -28,7 +28,6 @@ Premium, bold-playful, dark-themed single-page website built with semantic HTML,
   - `js/scroll.js`
   - `js/reveal.js`
   - `js/theme.js`
-  - `js/games.js`
 
 ## Run locally
 1. Open `index.html` directly, or
@@ -43,4 +42,3 @@ Premium, bold-playful, dark-themed single-page website built with semantic HTML,
 ## Notes
 - Content is editable from `js/data.js`.
 - Contact section includes direct email and social links.
-- Includes one built-in mini game in `js/games.js`.
